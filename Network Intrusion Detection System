@@ -1,0 +1,72 @@
+import logging
+import smtplib
+from scapy.all import sniff # type: ignore
+from collections import defaultdict
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import time
+
+# Configure logging
+logging.basicConfig(filename='nids.log', level=logging.INFO)
+
+# Dictionary to track the number of packets from each IP
+packet_counts = defaultdict(int)
+
+# Threshold for detecting anomalies
+THRESHOLD = 100  # Adjust this based on your environment
+
+def send_email_alert(subject, message):
+    # Email configuration
+    sender_email = "dungeons.and.dragons438@gmail.com"  # Your Gmail email address
+    receiver_email = "connoredwards12@gmail.com"  # Recipient email address
+    password = "qqpw qzqj opux npvv"  # Your Gmail password or App Password
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+
+    for attempt in range(3):  # Retry up to 3 times
+        try:
+            # Connect to the Gmail SMTP server with TLS
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()  # Upgrade to TLS
+            server.login(sender_email, password)
+            text = msg.as_string()
+            server.sendmail(sender_email, receiver_email, text)
+            server.quit()
+            print("Email alert sent successfully!")
+            break  # Exit loop if email is sent successfully
+        except Exception as e:
+            print(f"Attempt {attempt+1}: Failed to send email alert: {e}")
+            if attempt < 2:  # Wait before retrying if not the last attempt
+                time.sleep(5)
+            else:
+                raise  # Re-raise the exception after the last attempt for debugging
+
+def packet_callback(packet):
+    # Track packets by source IP
+    if packet.haslayer('IP'):
+        src_ip = packet['IP'].src
+        packet_counts[src_ip] += 1
+        
+        # Check if the number of packets from this IP exceeds the threshold
+        if packet_counts[src_ip] > THRESHOLD:
+            log_message = f"Anomaly detected! IP {src_ip} has sent more than {THRESHOLD} packets."
+            print(log_message)
+            logging.info(log_message)
+            
+            # Send an email alert
+            email_subject = "Anomaly Detected in Network Traffic"
+            email_message = f"Suspicious activity detected from IP {src_ip}. More than {THRESHOLD} packets sent."
+            send_email_alert(email_subject, email_message)
+    
+    # Log each packet as usual
+    log_message = f"Packet captured: {packet.summary()}"
+    print(log_message)
+    logging.info(log_message)
+
+# Start sniffing on the specified interface, adjust 'iface' as needed
+sniff(iface="Wi-Fi", prn=packet_callback, count=1000)
+
