@@ -1,1 +1,61 @@
+public class Main {
+    public static void main(String[] args) {
+        // Creating a new Zoo.
+        Zoo laZoo = new Zoo("Los Angeles Zoo", "5333 Zoo Dr, Los Angeles, CA 90027", 133, 0);
+
+        // Creating two different Enclosures.
+        Enclosure firstEnclosure = new Enclosure("Savannah");
+        Enclosure secondEnclosure = new Enclosure("River");
+
+        // Creating our animals.
+        Zebra zeb = new Zebra("Zebby", 5);
+        Gazelle gaz = new Gazelle("Gaz", 3);
+        Crocodile croc = new Crocodile("Gena", 10);
+        Lion leo = new Lion("Leo", 7);
+
+        // Trying to add croc to the first Enclosure, but Crocodiles can't live in the Savannah, so it prints an error message.
+        if (!firstEnclosure.addAnimal(croc)) {
+            System.out.println("Error! " + croc.getName() + " cannot live in the Savanna. addAnimal failed.");
+        }
+
+        // Adding leo to the first enclosure.
+        firstEnclosure.addAnimal(leo);
+
+        // Adding croc to the second enclosure.
+        secondEnclosure.addAnimal(croc);
+
+        // Trying to add zeb to the secondEnclosure, but Crocodiles and Zebras are enemies, so it prints an error message.
+        if (!secondEnclosure.addAnimal(zeb)) {
+            System.out.println("Error! " + zeb.getName() + " cannot live with " + croc.getName() + ", as they are enemies. addAnimal failed.");
+        }
+
+        // Creating a new enclosure just for the herbivores.
+        Enclosure thirdEnclosure = new Enclosure("Savannah");
+
+        // Adding zeb and gaz to the third enclosure.
+        thirdEnclosure.addAnimal(zeb);
+        thirdEnclosure.addAnimal(gaz);
+
+        // Adding all three enclosures to the zoo.
+        laZoo.addEnclosure(firstEnclosure);
+        laZoo.addEnclosure(secondEnclosure);
+        laZoo.addEnclosure(thirdEnclosure);
+
+        // Printing the Zoo:
+        System.out.println(laZoo);
+
+        // Getting the feeding instructions for all the animals:
+        laZoo.getFeedingInstructions();
+
+        // Feeding the animals:
+        laZoo.feed();
+
+        // However, an error message is printed because the Zoo doesn't have enough money to feed all the animals,
+        // so we add more money to the Zoo.
+        laZoo.setBudget(999999999);
+
+        // Successfully feeding the animals!
+        laZoo.feed();
+    }
+}
 
