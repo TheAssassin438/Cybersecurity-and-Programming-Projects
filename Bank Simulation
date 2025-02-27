@@ -1,3 +1,7 @@
+READ ME: This project simulates banking operations using object-oriented programming principles.  
+The provided skeleton code remains unmodified, and my implementation is built  
+on top of it to handle specific functionalities.
+
 public class Bank {
     private BasicAccount[] accounts;
     private String name;
