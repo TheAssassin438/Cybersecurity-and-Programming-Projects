@@ -1,3 +1,6 @@
+READ ME: This class extends BasicAccount to create a specialized account with unqiue features. These features include setting the maintenance fee to zero,
+doubles the interest rate, handles intial deposit upon creation, and overrides toString() to provide a customized account description.
+
 // Connor Edwards, Assignment 3
 
 public class HighRollerAccount extends BasicAccount {
