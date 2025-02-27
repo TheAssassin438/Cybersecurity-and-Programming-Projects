@@ -1,0 +1,20 @@
+// Connor Edwards, Assignment 3
+
+public class HighRollerAccount extends BasicAccount {
+    // Constructor to initialize HighRollerAccount with account ID, owner (Person), bank name, and initial balance
+    public HighRollerAccount(int id, Person owner, String bank, double balance) {
+        super(id, owner, bank);
+        // Set the maintenance fee for high roller accounts to zero
+        this.setMaintFee(0.0);
+        // Double the interest rate for high roller accounts
+        this.setInterestRate(this.getInterestRate() * 2);
+        // Deposit the initial balance
+        this.deposit(balance);
+    }
+
+    // Override toString method to provide a formatted string representation
+    @Override
+    public String toString() {
+        return "High Roller " + super.toString();
+    }
+}
