@@ -19,7 +19,7 @@ def send_email_alert(subject, message):
     # Email configuration
     sender_email = "dungeons.and.dragons438@gmail.com"  # Your Gmail email address
     receiver_email = "connoredwards12@gmail.com"  # Recipient email address
-    password = "qqpw qzqj opux npvv"  # Your Gmail password or App Password
+    password = "*******************"  # Your Gmail password or App Password
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
