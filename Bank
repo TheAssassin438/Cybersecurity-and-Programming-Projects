@@ -1,4 +1,4 @@
-README: The Bank class manages different types of of accounts, including basic, student, and high roller accounts, dynamically assigning unique ID's and 
+READ ME: The Bank class manages different types of of accounts, including basic, student, and high roller accounts, dynamically assigning unique ID's and 
 resizing storage when necessary. It handles deposits, withdrawals, and interest payments, converting account types based on balance thresholds. 
 Maintenance fees and interest rates are applied to all accounts, ensuring proper financial management. The system allows account searches and printing based on 
 ownership, enhancing accessibility. By utilizing inheritance and polymorphism, the class ensures seamless account transitions while maintaining efficiency and 
