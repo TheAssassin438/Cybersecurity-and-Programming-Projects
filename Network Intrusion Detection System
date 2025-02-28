@@ -1,3 +1,9 @@
+READ ME: This was a personal endeavour I chose to program entirely in Python. When testing the program, 
+I opened a VM on my machine in order to safely test the code which included sniffing packets over my personal network and if the packet number exceeded
+a certain threshold I set, an automated email alert would be sent to me.
+I hid the password login for security reasons.
+
+
 import logging
 import smtplib
 from scapy.all import sniff # type: ignore
@@ -17,7 +23,7 @@ THRESHOLD = 100  # Adjust this based on your environment
 
 def send_email_alert(subject, message):
     # Email configuration
-    sender_email = "dungeons.and.dragons438@gmail.com"  # Your Gmail email address
+    sender_email = "dungeons.and.dragons438@gmail.com"  # Sender Gmail address
     receiver_email = "connoredwards12@gmail.com"  # Recipient email address
     password = "*******************"  # Your Gmail password or App Password
 
