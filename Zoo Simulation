@@ -1,3 +1,7 @@
+READ ME: This school project was built using the provided skeleton code below, which established the basic structure. I was tasked with expanding
+on it by implementing additional classes to enhance functionality. The additional classes I implemented that are a part of this project are
+AnimalClass, EnclosureClass, FeedableClass, Crocodile, Gazelle, Lion, Zebra, and Zoo.
+
 public class Main {
     public static void main(String[] args) {
         // Creating a new Zoo.
