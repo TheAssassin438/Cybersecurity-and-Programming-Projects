@@ -1,0 +1,53 @@
+READ ME: The Person class represents an individual with an ID, name, and address. 
+It provides methods to set and retrieve personal details, overrides toString() for formatted output, and implements equals() 
+to compare individuals based on ID and name.
+
+// Connor Edwards, Assignment 3
+
+public class Person {
+    protected int id;
+    protected String name;
+    protected String address;
+
+    // Constructor to initialize Person with ID and name
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.address = "";
+    }
+
+    // Setter for address
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    // Getter for address
+    public String getAddress() {
+        return address;
+    }
+
+    // Getter for ID
+    public int getId() {
+        return id;
+    }
+
+    // Getter for name
+    public String getName() {
+        return name;
+    }
+
+    // Override toString method to provide a formatted string representation
+    @Override
+    public String toString() {
+        return "Person: " + name;
+    }
+
+    // Override equals method to compare ID and name for equality
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        Person person = (Person) other;
+        return id == person.id && name.equals(person.name);
+    }
+}
