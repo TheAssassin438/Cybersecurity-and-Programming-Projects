@@ -1,3 +1,8 @@
+READ ME: This school project was built using the provided skeleton code below, with additional classes created to expand functionality.
+I implemented BasicAccount and Person as core components, along with Bank, HighRollerAccount, StudentAccount, and Student.
+This project applies object-oriented programming, including inheritance and polymorphism, to simulate a functional banking system.
+
+
 public class Bank {
     private BasicAccount[] accounts;
     private String name;
