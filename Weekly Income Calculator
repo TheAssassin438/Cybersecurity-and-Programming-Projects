@@ -1,3 +1,6 @@
+READ ME: This school project is a simple Python program that calculates an employee's weekly earnings based on their hourly wage and total hours worked. 
+It prompts the user for their name, hourly rate, and hours worked, then computes and displays the total paycheck amount formatted to two decimal places.
+
 employee_name = input("Enter your name: ")
 hourly_rate_str = input(employee_name + ", what is your hourly rate? $")
 hourly_rate = float(hourly_rate_str)
