@@ -1,0 +1,103 @@
+READ ME: The BasicAccount class represents a fundamental bank account with an owner, unique account ID, bank name, and balance tracking. 
+It allows deposits, withdrawals, and interest accumulation, while also assessing maintenance fees if applicable. 
+The class includes methods to retrieve account details and override equality checks based on account ID and bank name. 
+Utilizing object-oriented principles, it serves as a base class for more specialized account types, ensuring modularity and scalability in the banking system.
+
+// Connor Edwards, Assignment 3
+
+public class BasicAccount {
+    protected int acctId;
+    protected Person owner;
+    protected String bank;
+    protected double balance;
+    protected double intRate;
+    protected double maintFee;
+
+    // Constructor to initialize BasicAccount with account ID, owner, and bank name
+    public BasicAccount(int acctId, Person owner, String bank) {
+        this.acctId = acctId;
+        this.owner = owner;
+        this.bank = bank;
+        this.balance = 0.0;
+        this.intRate = 0.0;
+        this.maintFee = 0.0;
+    }
+
+    // Deposit method to add funds to the account
+    public double deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+        return balance;
+    }
+
+    // Withdraw method to remove funds from the account
+    public double withdraw(double amount) {
+        if (amount > 0) {
+            if (amount <= balance) {
+                balance -= amount;
+            } else {
+                balance = 0;
+            }
+        }
+        return amount;
+    }
+
+    // Getter for balance
+    public double getBalance() {
+        return balance;
+    }
+
+    // Getter for account ID
+    public int getAcctId() {
+        return acctId;
+    }
+
+    // Getter for owner
+    public Person getOwner() {
+        return owner;
+    }
+
+    // Setter for interest rate
+    public void setInterestRate(double intRate) {
+        this.intRate = intRate;
+    }
+
+    // Setter for maintenance fee
+    public void setMaintFee(double maintFee) {
+        this.maintFee = maintFee;
+    }
+
+    // Method to add interest to the account balance
+    public void addInterest() {
+        double interest = balance * intRate;
+        balance += interest;
+    }
+
+    // Method to assess maintenance fee and deduct it from the balance
+    public double assessMaintenanceFee() {
+        double fee = maintFee;
+        if (balance < maintFee) {
+            fee = balance;
+            balance = 0;
+        } else {
+            balance -= maintFee;
+        }
+        return fee;
+    }
+
+    // Override toString method to provide a formatted string representation
+    @Override
+    public String toString() {
+        return "Account of " + owner + " with ID " + acctId + " and a balance of " + balance;
+    }
+
+    // Override equals method to compare account ID and bank name for equality
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        BasicAccount that = (BasicAccount) other;
+        return acctId == that.acctId && bank.equals(that.bank);
+    }
+}
