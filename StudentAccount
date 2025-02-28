@@ -1,0 +1,14 @@
+READ ME: The StudentAccount class extends BasicAccount, representing a specialized account for students. 
+It inherits core banking functionalities while setting the maintenance fee to zero, ensuring students are not charged for account upkeep. 
+This class maintains the fundamental structure of a bank account while providing financial benefits tailored to student users.
+
+// Connor Edwards, Assignment 3
+
+public class StudentAccount extends BasicAccount {
+    // Constructor to initialize StudentAccount with account ID, owner (Student), and bank name
+    public StudentAccount(int id, Student owner, String bank) {
+        super(id, owner, bank);
+        // Set the maintenance fee for student accounts to zero
+        this.setMaintFee(0.0);
+    }
+}
