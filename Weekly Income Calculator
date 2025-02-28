@@ -1,7 +1,0 @@
-employee_name = input("Enter your name: ")
-hourly_rate_str = input(employee_name + ", what is your hourly rate? $")
-hourly_rate = float(hourly_rate_str)
-total_hours_str = input(employee_name + ", how many hours did you work this week? ")
-total_hours = int(total_hours_str)
-total_wages = hourly_rate * total_hours
-print(employee_name + ", your check for this week should be $" + format(total_wages, ".2f"))
