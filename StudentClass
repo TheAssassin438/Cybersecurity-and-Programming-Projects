@@ -1,0 +1,32 @@
+READ ME: The Student class extends Person, adding a school name and student ID.
+It includes methods to retrieve school details and overrides toString() to display the student’s name and institution.
+
+// Connor Edwards, Assignment 3
+
+public class Student extends Person {
+    protected int sId;
+    protected String school;
+
+    // Constructor to initialize Student with ID, name, school, and student ID
+    public Student(int id, String name, String school, int sId) {
+        super(id, name);
+        this.school = school;
+        this.sId = sId;
+    }
+
+    // Getter for school
+    public String getSchool() {
+        return school;
+    }
+
+    // Getter for student ID
+    public int getSId() {
+        return sId;
+    }
+
+    // Override toString method to provide a formatted string representation
+    @Override
+    public String toString() {
+        return "Student: " + name + " at " + school;
+    }
+}
