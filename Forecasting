@@ -1,0 +1,69 @@
+READ ME: This school project utilizes Long Short-Term Memory (LTSM) neural networks to predict ingredient demand in fictional restaurants
+to help reduce food waste and optimize inventory management. It analyzes historical sales data to forecast future usage trends.
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler 
+from tensorflow.keras.models import Sequential 
+from tensorflow.keras.layers import Dense, LSTM 
+
+# Load the data
+data = pd.read_csv('ingredients.csv')
+time_series_data = data['PortionUOMTypeId'].fillna(data['PortionUOMTypeId'].mean()).values
+
+# Apply smoothing with a moving average (window=5)
+data['Smoothed'] = data['PortionUOMTypeId'].rolling(window=5).mean()
+smoothed_data = data['Smoothed'].dropna().values
+
+# Scale the data
+scaler = MinMaxScaler(feature_range=(0, 1))
+scaled_data = scaler.fit_transform(smoothed_data.reshape(-1, 1))
+
+# Prepare the data for LSTM: create sequences of past values
+def create_sequences(data, sequence_length=20):
+    sequences = []
+    labels = []
+    for i in range(len(data) - sequence_length):
+        sequences.append(data[i:i + sequence_length])
+        labels.append(data[i + sequence_length])
+    return np.array(sequences), np.array(labels)
+
+sequence_length = 20  # Increased sequence length
+X, y = create_sequences(scaled_data, sequence_length)
+
+# Reshape X for LSTM [samples, time steps, features]
+X = X.reshape((X.shape[0], X.shape[1], 1))
+
+# Define a deeper LSTM model
+model = Sequential()
+model.add(LSTM(100, activation='relu', return_sequences=True, input_shape=(X.shape[1], 1)))
+model.add(LSTM(50, activation='relu'))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mse')
+
+# Train the model
+model.fit(X, y, epochs=20, batch_size=16, verbose=1)
+
+# Forecast the next 200 points using a walk-forward approach
+predictions = []
+current_input = X[-1]  # Start with the last known sequence in the training set
+
+for _ in range(200):
+    prediction = model.predict(current_input.reshape(1, sequence_length, 1))
+    predictions.append(prediction[0, 0])
+    # Update the current input to include the new prediction and drop the first value
+    current_input = np.append(current_input[1:], prediction, axis=0)
+
+# Rescale predictions back to the original scale
+forecast_lstm = scaler.inverse_transform(np.array(predictions).reshape(-1, 1))
+
+# Plot the forecast alongside the original (smoothed) data
+plt.figure(figsize=(12, 6))
+plt.plot(smoothed_data, label='Smoothed Original Data')
+plt.plot(range(len(smoothed_data), len(smoothed_data) + len(forecast_lstm)), forecast_lstm, label='LSTM Forecast (200 steps)', linestyle='--')
+plt.title('Extended LSTM Forecast of Portion UOM Type (200 Steps)')
+plt.xlabel('Index')
+plt.ylabel('Portion UOM Type')
+plt.legend()
+plt.show()
